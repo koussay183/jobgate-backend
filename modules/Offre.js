@@ -16,6 +16,8 @@ const o = new mongoose.Schema({
   idCategory : {
     type : String,
     required  : true
+  },imageUrl : {
+    type : String
   }
 
 });

@@ -52,5 +52,13 @@ router.post('/postule/:idC/:idOffre',async(req, res) => {
     res.status(400).json(error);
   }
 })
-
+router.get('/get-offre/:id',async(req, res) => {
+  try {
+    const offre = await Offre.findOne({_id : req.params.id});
+    
+    res.status(201).json(offre);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
 module.exports = router

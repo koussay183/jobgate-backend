@@ -10,17 +10,20 @@ const cookieParser = require('cookie-parser');
 // coockies nst3mloha bch naamlo save ll data fl front w tb9a mawjoda bch ki nrj3o naamlo login y3adih tool
 
 const app = express();
+
 app.use(cors({
     allowedHeaders : "*",
     origin :"*"
 }))
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin','*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH');
     next();
-  });
+});
+  
 app.use(express.json());
 app.use(cookieParser());
 
@@ -28,6 +31,18 @@ app.use(cookieParser());
 app.use('/c', candidatRoutes);
 app.use('/e' , entrepriseRoutes)
 
+// Endpoint to check if the user is logged in
+app.get('/check-auth', (req, res) => {
+    // Check if the HTTP-only cookie containing authentication information exists
+    if (req.cookies && req.cookies.token) {
+      // If the cookie exists, the user is authenticated
+      // You might perform additional validation/authentication here if needed
+      res.json({ loggedIn: true });
+    } else {
+      // If the cookie doesn't exist, the user is not logged in
+      res.json({ loggedIn: false });
+    }
+  });
 // Start the server
 app.listen(3000, () => {
     // Connect to MongoDB 

@@ -40,8 +40,8 @@ router.post('/signup',async(req, res) => {
 
 router.post('/create-offre/:id',async(req, res) => {
     try {
-        const { id } = req.params;
-
+        const {id} = req.params
+        
         const e = await Entreprise.findOne({_id : id});
 
         if(!e) {
@@ -50,7 +50,7 @@ router.post('/create-offre/:id',async(req, res) => {
 
         let offre = {
             ...req.body,
-            idEntrePrise : id
+            idEntreprise : id
         }
 
         const o = new Offre(offre);
@@ -61,4 +61,15 @@ router.post('/create-offre/:id',async(req, res) => {
     }
 })
 
+router.get('/offres/:id',async(req, res) => {
+  try {
+      const {id} = req.params
+      
+      const e = await Offre.find({idEntreprise : id});
+
+      res.json({offers : e})
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
 module.exports = router
